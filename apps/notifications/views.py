@@ -1,10 +1,7 @@
 from collections import namedtuple
 from celery.result import AsyncResult
-from django.db.models import Count, Q, IntegerField
-from django.shortcuts import get_list_or_404
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from .models import (
     Client,
@@ -62,8 +59,10 @@ class TotalStatisticMailingListView(viewsets.ViewSet):
 
     def list(self, request):
         mailings = Mailing.objects.all()
-        serializer = TotalStatisticMailingSerializer(_get_mailings_list_with_statistic_sent_messages(mailings),
-                                                     many=True)
+        serializer = TotalStatisticMailingSerializer(
+            _get_mailings_list_with_statistic_sent_messages(mailings),
+            many=True
+        )
         return Response(serializer.data)
 
 class DetailStatisticMailingView(generics.ListAPIView):

@@ -57,8 +57,8 @@ def create_and_send_messages_for_mailing(mailing_id, filter_code, filter_tag, ma
 
 @app.task
 def send_message_with_statistic():
-    """ Рассылка общей статистики на почту
-    раз в сутки """
+    """ Рассылка общей статистики
+    на почту раз в сутки """
     mailings = Mailing.objects.filter(datetime_end__lt=timezone.localtime(timezone.now()))
     if not mailings:
         return
@@ -91,7 +91,7 @@ def send_message_with_statistic():
     send_mail(
         'Статистика',
         text,
-        'vitalikmok@gmail.com',
-        ['VitaliyMokritskiy@yandex.ru'],
+        settings.EMAIL_HOST_USER,
+        [settings.EMAIL_RECIPIENT],
         fail_silently=False,
     )

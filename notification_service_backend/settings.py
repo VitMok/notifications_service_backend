@@ -23,12 +23,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG', 'True')
+DEBUG = bool(int(os.getenv("DEBUG", "0")))
 
 ALLOWED_HOSTS = []
 
 
-# Application definition
+# ___   ___  ___  ____
+# / _ | / _ \/ _ \/ __/
+# / __ |/ ___/ ___/\ \`
+# /_/ |_/_/  /_/  /___/
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -46,6 +49,11 @@ INSTALLED_APPS = [
     'apps.notifications',
 ]
 
+# __  __________  ___  __   _____      _____   ___  ____
+# /  |/  /  _/ _ \/ _ \/ /  / __/ | /| / / _ | / _ \/ __/
+# / /|_/ // // // / // / /__/ _/ | |/ |/ / __ |/ , _/ _/
+# /_/  /_/___/____/____/____/___/ |__/|__/_/ |_/_/|_/___/
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -58,6 +66,11 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'notification_service_backend.urls'
+
+# ____________  ______  __   ___ ______________
+# /_  __/ __/  |/  / _ \/ /  / _ /_  __/ __/ __/
+# / / / _// /|_/ / ___/ /__/ __ |/ / / _/_\ \
+# /_/ /___/_/  /_/_/  /____/_/ |_/_/ /___/___/
 
 TEMPLATES = [
     {
@@ -78,8 +91,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'notification_service_backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+# ___  ___
+# / _ \/ _ )
+# / // / _  |
+# /____/____/
 
 DATABASES = {
     'default': {
@@ -93,8 +108,10 @@ DATABASES = {
 }
 
 
-# Password validation
-# https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
+#   ___  ___   ________  _   _____   __   _______  ___ ______________  _  __
+#  / _ \/ _ | / __/ __/ | | / / _ | / /  /  _/ _ \/ _ /_  __/  _/ __ \/ |/ /
+# / ___/ __ |_\ \_\ \   | |/ / __ |/ /___/ // // / __ |/ / _/ // /_/ /    /
+# /_/  /_/ |_/___/___/   |___/_/ |_/____/___/____/_/ |_/_/ /___/\____/_/|_/
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -112,17 +129,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/3.0/topics/i18n/
+# __   ____  ________   __   ____
+# / /  / __ \/ ___/ _ | / /  / __/
+# / /__/ /_/ / /__/ __ |/ /__/ _/
+# /____/\____/\___/_/ |_/____/___/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = os.getenv('TIME_ZONE', 'Europe/Moscow')
-
 USE_I18N = True
-
 USE_L10N = True
-
 USE_TZ = True
 
 
@@ -130,6 +145,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# ___  ______________
+# / _ \/ __/ __/_  __/
+# / , _/ _/_\ \  / /
+# /_/|_/___/___/ /_/
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -141,18 +161,28 @@ REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
-# Email
+# ______  ______   ______
+# / __/  |/  / _ | /  _/ /
+# / _// /|_/ / __ |_/ // /__
+# /___/_/  /_/_/ |_/___/____/
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = os.getenv('EMAIL_HOST')
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = os.getenv('EMAIL_PORT')
 
+EMAIL_RECIPIENT = os.getenv('EMAIL_RECIPIENT')
+
 # REDIS
 REDIS_HOST = os.getenv('REDIS_HOST')
 REDIS_PORT = os.getenv('REDIS_PORT')
 
-# CELERY
+# ___________   _________  __
+# / ___/ __/ /  / __/ _ \ \/ /
+# / /__/ _// /__/ _// , _/\  /
+# \___/___/____/___/_/|_| /_/
+
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
 CELERY_ACCEPT_CONTENT = ["application/json"]
