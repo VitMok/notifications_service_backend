@@ -1,7 +1,6 @@
 from collections import namedtuple
 from django.db.models import Count, IntegerField, Q
 from django.utils import timezone
-from django.core.mail import send_mail, EmailMessage
 
 from .tasks import create_and_send_messages_for_mailing
 
