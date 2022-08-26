@@ -5,7 +5,6 @@ import requests
 from django.core.mail import send_mail
 from django.db.models import Count, IntegerField, Q
 from django.utils import timezone
-import pytz
 
 from notification_service_backend.celery import app
 from .models import (
@@ -43,11 +42,6 @@ def create_and_send_messages_for_mailing(mailing_id, filter_code, filter_tag, ma
     mailing = Mailing.objects.get(pk=mailing_id)
     mailing_datetime_end = datetime.strptime(mailing_datetime_end, "%Y-%m-%dT%H:%M:%S%z")
     for client in clients:
-        ##
-        # MOSCOW = pytz.timezone('Europe/Moscow')
-        utc_dt = datetime.now(tz.utc)
-        client_timezone = pytz.timezone(client.timezone)
-        ##
         date_time_now = timezone.localtime(timezone.now())
         if date_time_now > mailing_datetime_end:
             break
