@@ -1,5 +1,4 @@
 from datetime import datetime
-from datetime import timezone as tz
 from django.conf import settings
 import requests
 from django.core.mail import send_mail

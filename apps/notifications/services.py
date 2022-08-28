@@ -2,6 +2,7 @@ from collections import namedtuple
 from django.db.models import Count, IntegerField, Q
 from django.utils import timezone
 
+from notification_service_backend.celery import app
 from .tasks import create_and_send_messages_for_mailing
 
 
@@ -10,6 +11,7 @@ def _time_check_and_task_creation(mailing):
     от текущего времени и времени начала рассылки """
     date_time = timezone.localtime(timezone.now())
     if (mailing.datetime_start <= date_time) and (mailing.datetime_end >= date_time):
+        app.control.revoke(str(mailing.pk), terminate=True)
         create_and_send_messages_for_mailing.delay(mailing.pk, mailing.filter_code, mailing.filter_tag, mailing.datetime_end)
     else:
         create_and_send_messages_for_mailing.apply_async(

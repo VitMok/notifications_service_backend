@@ -3,6 +3,7 @@ from celery.result import AsyncResult
 from django.db.models import Prefetch
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
+from notification_service_backend.celery import app
 
 from .models import (
     Client,
@@ -47,11 +48,10 @@ class MailingDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         mailing = serializer.save()
-        AsyncResult(str(mailing.pk)).revoke()
         _time_check_and_task_creation(mailing)
 
     def perform_destroy(self, instance):
-        AsyncResult(str(instance.pk)).revoke()
+        AsyncResult(str(instance.pk)).revoke(terminate=True)
         instance.delete()
 
 class TotalStatisticMailingListView(viewsets.ViewSet):
