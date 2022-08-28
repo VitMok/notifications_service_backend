@@ -1,5 +1,6 @@
 from collections import namedtuple
 from celery.result import AsyncResult
+from django.db.models import Prefetch
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
 
@@ -70,11 +71,11 @@ class DetailStatisticMailingView(generics.ListAPIView):
     сообщений по конкретной рассылке """
 
     def list(self, request, *args, **kwargs):
-        mailing = Mailing.objects.get(pk=self.kwargs['pk'])
+        mailing = Mailing.objects.prefetch_related('mailing_messages').get(pk=self.kwargs['pk'])
         statistic = namedtuple('statistic', ('mailing', 'messages'))
         stat = statistic(
             mailing=mailing,
-            messages=Message.objects.filter(mailing=mailing),
+            messages=mailing.mailing_messages,
         )
         serializer = DetailStatisticMailingSerializer(stat)
         return Response(serializer.data)
