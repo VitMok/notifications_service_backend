@@ -1,17 +1,17 @@
-## В данном проекте реализованы следующие задачи:
+# The following tasks were implemented in this project:
 ```
-1. Добавление нового клиента в справочник со всеми его атрибутами.  
-2. Обновление данных атрибутов клиента.  
-3. Удаление клиента из справочника.  
-4. Добавление новой рассылки со всеми её атрибутами.  
-5. Получение общей статистики по созданным рассылкам и количеству отправленных сообщений по ним с группировкой по статусам.  
-6. Получение детальной статистики отправленных сообщений по конкретной рассылке.  
-7. Обновление атрибутов рассылки.  
-8. Удаление рассылки.  
-9. Обработка активных рассылок и отправка сообщений клиентам.  
-10. Открытие страницы со Swagger UI и описанием разработанного API по адресу /docs/.  
-11. Отправка статистики по обработанным рассылкам на email.  
-12. Обработка ошибок внешнего сервиса и откладывание запросов при неуспехе для последующей повторной отправки.
+1. Adding a new client to the directory with all its attributes.
+2. Update client attribute data.
+3. Removing a client from the directory.
+4. Adding a new mailing with all its attributes.
+5. Obtaining general statistics on the created mailing lists and the number of sent messages on them, grouped by status.
+6. Obtaining detailed statistics of sent messages for a specific mailing list.
+7. Updating distribution attributes.
+8. Removing the mailing list.
+9. Processing active mailings and sending messages to clients.
+10. Opening a page with Swagger UI and a description of the developed API at /docs/.
+11. Sending statistics on processed mailing lists to email.
+12. Handling external service errors and postponing requests if unsuccessful for later resubmission.
 ```
 
 ## Setup
