@@ -11,7 +11,6 @@ app.autodiscover_tasks()
 
 
 # Celery beat tasks
-
 app.conf.beat_schedule = {
     'send_statistic_every_day': {
         'task': 'apps.notifications.tasks.send_message_with_statistic',

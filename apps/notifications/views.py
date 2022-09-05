@@ -1,14 +1,11 @@
 from collections import namedtuple
 from celery.result import AsyncResult
-from django.db.models import Prefetch
 from rest_framework import generics, viewsets
 from rest_framework.response import Response
-from notification_service_backend.celery import app
 
 from .models import (
     Client,
     Mailing,
-    Message,
 )
 from .serializers import (
     ClientSerializer,

@@ -1,7 +1,6 @@
 from django.contrib.postgres.indexes import HashIndex
 from django.core import validators
 from django.db import models
-from django.contrib.postgres.fields import DateTimeRangeField
 import pytz
 
 
