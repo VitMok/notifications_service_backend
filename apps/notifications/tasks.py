@@ -46,7 +46,8 @@ def create_and_send_messages_for_mailing(mailing_id, filter_code, filter_tag, ma
             break
         message = Message.objects.create(mailing=mailing,
                                          client=client)
-        create_request.delay(message.pk, int(client.phone), mailing.text, mailing_datetime_end)
+        create_request.delay(message.pk, int(client.phone),
+                             mailing.text, mailing_datetime_end)
 
 @app.task
 def send_message_with_statistic():

@@ -6,18 +6,24 @@ import pytz
 
 class Mailing(models.Model):
     """ Рассылка """
-    datetime_start = models.DateTimeField(verbose_name='Дата и время запуска рассылки')
-    text = models.TextField(verbose_name='Текст сообщения')
+    datetime_start = models.DateTimeField(
+        verbose_name='Дата и время запуска рассылки'
+    )
+    text = models.TextField(
+        verbose_name='Текст сообщения'
+    )
     filter_code = models.CharField(
-        verbose_name='Код мобильного оператора для фильтрации',
         max_length=3,
-        validators=[validators.RegexValidator(regex=r'\d{3}')]
+        validators=[validators.RegexValidator(regex=r'\d{3}')],
+        verbose_name='Код мобильного оператора для фильтрации',
     )
     filter_tag = models.CharField(
+        max_length=255,
         verbose_name='Тег для фильтрации',
-        max_length=255
     )
-    datetime_end = models.DateTimeField(verbose_name='Дата и время окончания рассылки')
+    datetime_end = models.DateTimeField(
+        verbose_name='Дата и время окончания рассылки'
+    )
 
     class Meta:
         db_table = 'mailings'
@@ -25,26 +31,26 @@ class Mailing(models.Model):
 class Client(models.Model):
     """ Клиент """
     phone = models.CharField(
-        verbose_name='Номер телефона',
         unique=True,
         max_length=11,
-        validators=[validators.RegexValidator(regex=r'^7\d{10}$')]
+        validators=[validators.RegexValidator(regex=r'^7\d{10}$')],
+        verbose_name='Номер телефона',
     )
     code = models.CharField(
-        verbose_name='Код мобильного оператора',
         max_length=3,
-        validators=[validators.RegexValidator(regex=r'\d{3}')]
+        validators=[validators.RegexValidator(regex=r'\d{3}')],
+        verbose_name='Код мобильного оператора',
     )
     tag = models.CharField(
+        max_length=255,
         verbose_name='Тег',
-        max_length=255
     )
     TIMEZONES = tuple(zip(pytz.all_timezones, pytz.all_timezones))
     timezone = models.CharField(
-        verbose_name='Часовой пояс',
         max_length=32,
         choices=TIMEZONES,
-        default='UTC'
+        default='UTC',
+        verbose_name='Часовой пояс',
     )
 
     class Meta:
@@ -60,24 +66,24 @@ class Client(models.Model):
 class Message(models.Model):
     """ Сообщение """
     created = models.DateTimeField(
+        auto_now_add=True,
         verbose_name='Дата и время создания',
-        auto_now_add=True
     )
     is_sent = models.BooleanField(
+        default=False,
         verbose_name='Статус отправки',
-        default=False
     )
     mailing = models.ForeignKey(
         Mailing,
         on_delete=models.CASCADE,
+        related_name='mailing_messages',
         verbose_name='Рассылка',
-        related_name='mailing_messages'
     )
     client = models.ForeignKey(
         Client,
         on_delete=models.CASCADE,
+        related_name='client_messages',
         verbose_name='Клиент получатель',
-        related_name='client_messages'
     )
 
     class Meta:

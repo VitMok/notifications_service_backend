@@ -38,6 +38,5 @@ def _get_mailings_list_with_statistic_sent_messages(mailings):
             amount_not_sent_messages=not_sent_messages['amount']
         )
         total_list.append(stat)
-
     return total_list
 
