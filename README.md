@@ -14,19 +14,14 @@
 12. Handling external service errors and postponing requests if unsuccessful for later resubmission.
 ```
 
-## Setup
-```
-$ pip install -r requirements.txt
-$ python manage.py makemigrations
-$ python manage.py migrate
-$ python manage.py createsuperuser
-```
-
 ## Running Development Servers
 ```
-$ redis-server
-$ celery -A notification_service_backend worker -l info
-$ celery -A notification_service_backend beat -l info
-$ celery -A notification_service_backend flower --address=127.0.0.1 --port=5555
-$ python manage.py runserver
+$ docker compose up
+```
+
+## Setup
+```
+$ docker compose exec web python manage.py makemigrations
+$ docker compose exec web python manage.py migrate
+$ docker compose exec web python manage.py createsuperuser
 ```
