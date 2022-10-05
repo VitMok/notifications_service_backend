@@ -1,53 +1,49 @@
 version: '3.9'
 services:
-  nsb_db:
+  db:
     image: postgres
-    environment:
-      POSTGRES_DB: notifications_service_db
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Vitaskarate18
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
-  nsb_web:
-       build: .
-       env_file:
-         - ./.env
-       ports:
-         - "8000:8000"
-       command: python manage.py runserver 0.0.0.0:8000
-       volumes:
-         - .:/usr/src/notification_service_backend
-       depends_on:
-         - nsb_db
-         - nsb_redis
-  nsb_redis:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+  redis:
     image: redis
-  nsb_celery:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    depends_on:
+      - db
+      - redis
+  celery:
     build: .
     command: celery -A notification_service_backend worker -l info
     volumes:
-      - .:/usr/src/notification_service_backend
-    depends_on:
-      - nsb_db
-      - nsb_redis
-      - nsb_web
+      - .:/usr/src/app
     env_file:
       - ./.env
-  nsb_flower:
+    depends_on:
+      - db
+      - redis
+      - web
+  flower:
     build: .
-    ports:
-      - "5555:5555"
     command: celery -A notification_service_backend flower
     volumes:
-      - .:/usr/src/notification_service_backend
-    depends_on:
-      - nsb_db
-      - nsb_redis
-      - nsb_web
-      - nsb_celery
+      - .:/usr/src/app
+    ports:
+      - "5555:5555"
     env_file:
       - ./.env
-volumes:
-  postgres-data:
-
-# platform: linux/amd64
+    depends_on:
+      - db
+      - redis
+      - web
+      - celery
